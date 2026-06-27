@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewsFlow — Live World News</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ========== NAVBAR ========== -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <!-- Logo -->
+        <a href="#" class="nav-logo" id="homeBtn">
+          <span class="logo-news">News</span><span class="logo-flow">Flow</span>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="search-wrap">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search news..."
+          />
+          <button class="search-btn" id="searchBtn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+
+        <!-- Nav Actions -->
+        <div class="nav-actions">
+          <button class="dark-toggle" id="darkToggle" title="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button class="hamburger" id="hamburger">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Nav Links -->
+        <ul class="nav-links" id="navLinks">
+          <li>
+            <a href="#" class="nav-link" data-category="general">General</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-category="technology"
+              >Technology</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-category="business">Business</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-category="sports">Sports</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-category="health">Health</a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-category="science">Science</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- ========== BREAKING NEWS TICKER ========== -->
+    <div class="ticker-wrap">
+      <div class="ticker-label"><i class="fas fa-bolt"></i> Breaking</div>
+      <div class="ticker-track">
+        <div class="ticker-content" id="tickerContent">
+          Loading latest headlines...
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== HERO — TOP STORY ========== -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-card" id="heroCard">
+          <!-- JavaScript fills this -->
+          <div class="hero-loading" id="heroLoading">
+            <div class="spinner"></div>
+            <span>Loading top story...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CATEGORY TABS ========== -->
+    <section class="categories-section">
+      <div class="container">
+        <div class="category-tabs" id="categoryTabs">
+          <button class="cat-tab active" data-category="general">
+            <i class="fas fa-globe"></i> General
+          </button>
+          <button class="cat-tab" data-category="technology">
+            <i class="fas fa-microchip"></i> Technology
+          </button>
+          <button class="cat-tab" data-category="business">
+            <i class="fas fa-chart-line"></i> Business
+          </button>
+          <button class="cat-tab" data-category="sports">
+            <i class="fas fa-futbol"></i> Sports
+          </button>
+          <button class="cat-tab" data-category="health">
+            <i class="fas fa-heartbeat"></i> Health
+          </button>
+          <button class="cat-tab" data-category="science">
+            <i class="fas fa-flask"></i> Science
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== NEWS GRID ========== -->
+    <section class="news-section">
+      <div class="container">
+        <!-- Section heading — newspaper column style -->
+        <div class="news-heading">
+          <h2>Latest News</h2>
+          <p class="news-timestamp" id="newsTimestamp"></p>
+        </div>
+
+        <!-- Loading state -->
+        <div class="loading-state" id="newsLoading">
+          <div class="spinner"></div>
+          <span>Fetching latest news...</span>
+        </div>
+
+        <!-- Error state -->
+        <div class="error-state" id="newsError" style="display: none">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>Unable to load news. Please check your connection.</p>
+          <button class="btn btn-accent" id="retryBtn">
+            <i class="fas fa-redo"></i> Retry
+          </button>
+        </div>
+
+        <!-- News Grid -->
+        <div class="news-grid" id="newsGrid">
+          <!-- JavaScript fills this -->
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more-wrap" id="loadMoreWrap" style="display: none">
+          <button class="btn btn-outline" id="loadMoreBtn">
+            Load More <i class="fas fa-arrow-down"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-logo">
+            <span class="logo-news">News</span
+            ><span class="logo-flow">Flow</span>
+          </p>
+          <p class="footer-text">
+            Delivering real-time news from around the world. Built by
+            <strong>CDS</strong> 💪 · Port Harcourt, Nigeria 🇳🇬
+          </p>
+          <p class="footer-credit">
+            Powered by
+            <a href="https://newsapi.org" target="_blank">NewsAPI</a> · ©
+            <span class="current-year"></span> NewsFlow
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
