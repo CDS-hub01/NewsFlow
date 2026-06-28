@@ -1,23 +1,23 @@
 // GET ALL ELEMENTS — in same order as HTML
 // =====================================================
 
-const navbar = document.getElementById('navbar');
-const navLinks = document.getElementById('navLinks');
-const hamburger = document.getElementById('hamburger');
-const darkToggle = document.getElementById('darkToggle');
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const homeBtn = document.getElementById('homeBtn');
-const tickerContent = document.getElementById('tickerContent');
-const heroCard = document.getElementById('heroCard');
-const heroLoading = document.getElementById('heroLoading');
-const newsLoading = document.getElementById('newsLoading');
-const newsError = document.getElementById('newsError');
-const newsGrid = document.getElementById('newsGrid');
-const retryBtn = document.getElementById('retryBtn');
-const loadMoreWrap = document.getElementById('loadMoreWrap');
-const loadMoreBtn = document.getElementById('loadMoreBtn');
-const newsTimestamp = document.getElementById('newsTimestamp');
+const navbar = document.getElementById("navbar");
+const navLinks = document.getElementById("navLinks");
+const hamburger = document.getElementById("hamburger");
+const darkToggle = document.getElementById("darkToggle");
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const homeBtn = document.getElementById("homeBtn");
+const tickerContent = document.getElementById("tickerContent");
+const heroCard = document.getElementById("heroCard");
+const heroLoading = document.getElementById("heroLoading");
+const newsLoading = document.getElementById("newsLoading");
+const newsError = document.getElementById("newsError");
+const newsGrid = document.getElementById("newsGrid");
+const retryBtn = document.getElementById("retryBtn");
+const loadMoreWrap = document.getElementById("loadMoreWrap");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+const newsTimestamp = document.getElementById("newsTimestamp");
 
 // =====================================================
 // API CONFIGURATION
@@ -25,16 +25,16 @@ const newsTimestamp = document.getElementById('newsTimestamp');
 // NewsAPI key — type it directly in VS Code!
 // =====================================================
 
-const API_KEY = '4bb24aa7e9024eadb38c13458c0073d1';
-const BASE_URL = 'https://newsapi.org/v2';
+const API_KEY = "e070a56c46824f8981e5a54d5d7fbe16";
+const BASE_URL = "https://newsapi.org/v2";
 
 // APP STATE
 // WHY: Track current category, page and articles
 //      so we can load more and filter correctly!
 
-let currentCategory = 'general';
+let currentCategory = "general";
 let currentPage = 1;
-let currentQuery = '';
+let currentQuery = "";
 let allArticles = [];
 
 // =====================================================
@@ -44,7 +44,7 @@ let allArticles = [];
 //      user is searching or browsing by category!
 // =====================================================
 
-const buildUrl = (category, page = 1, query = '') => {
+const buildUrl = (category, page = 1, query = "") => {
   if (query) {
     return `${BASE_URL}/everything?q=${query}&language=en&pageSize=9&page=${page}&apiKey=${API_KEY}`;
   }
@@ -58,11 +58,11 @@ const buildUrl = (category, page = 1, query = '') => {
 // =====================================================
 
 const formatDate = (dateStr) => {
-  if (!dateStr) return '';
-  return new Date(dateStr).toLocaleDateString('en-NG', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleDateString("en-NG", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
   });
 };
 
@@ -73,14 +73,14 @@ const formatDate = (dateStr) => {
 // WHY: Gets live articles from NewsAPI!
 // =====================================================
 
-const fetchNews = async (category = 'general', page = 1, query = '') => {
+const fetchNews = async (category = "general", page = 1, query = "") => {
   try {
     // Show loading state
     if (page === 1) {
-      newsGrid.innerHTML = '';
-      newsLoading.style.display = 'flex';
-      newsError.style.display = 'none';
-      loadMoreWrap.style.display = 'none';
+      newsGrid.innerHTML = "";
+      newsLoading.style.display = "flex";
+      newsError.style.display = "none";
+      loadMoreWrap.style.display = "none";
     }
 
     const url = buildUrl(category, page, query);
@@ -88,16 +88,16 @@ const fetchNews = async (category = 'general', page = 1, query = '') => {
     const data = await response.json();
 
     // Hide loading
-    newsLoading.style.display = 'none';
+    newsLoading.style.display = "none";
 
     // Check API response status
-    if (data.status !== 'ok') {
-      throw new Error(data.message || 'API error');
+    if (data.status !== "ok") {
+      throw new Error(data.message || "API error");
     }
 
     // Filter out articles with no title or removed content
     const validArticles = data.articles.filter(
-      (a) => a.title && a.title !== '[Removed]' && a.url,
+      (a) => a.title && a.title !== "[Removed]" && a.url,
     );
 
     if (page === 1) {
@@ -125,14 +125,14 @@ const fetchNews = async (category = 'general', page = 1, query = '') => {
 
     // Show load more button if there are more articles
     if (data.totalResults > allArticles.length + 1) {
-      loadMoreWrap.style.display = 'block';
+      loadMoreWrap.style.display = "block";
     } else {
-      loadMoreWrap.style.display = 'none';
+      loadMoreWrap.style.display = "none";
     }
   } catch (error) {
-    console.log('NewsFlow fetch error:', error);
-    newsLoading.style.display = 'none';
-    newsError.style.display = 'flex';
+    console.log("NewsFlow fetch error:", error);
+    newsLoading.style.display = "none";
+    newsError.style.display = "flex";
   }
 };
 
@@ -160,9 +160,9 @@ const renderHero = (article) => {
           <i class="fas fa-star"></i> Top Story
         </span>
         <h2 class="hero-title">${article.title}</h2>
-        <p class="hero-desc">${article.description || 'Read the full story below.'}</p>
+        <p class="hero-desc">${article.description || "Read the full story below."}</p>
         <div class="hero-meta">
-          <span class="hero-source">${article.source?.name || 'Unknown'}</span>
+          <span class="hero-source">${article.source?.name || "Unknown"}</span>
           <span>·</span>
           <span>${formatDate(article.publishedAt)}</span>
         </div>
@@ -188,7 +188,7 @@ const renderGrid = (articles) => {
     return;
   }
 
-  newsGrid.innerHTML = articles.map((article) => createCard(article)).join('');
+  newsGrid.innerHTML = articles.map((article) => createCard(article)).join("");
 };
 
 // =====================================================
@@ -198,8 +198,8 @@ const renderGrid = (articles) => {
 // =====================================================
 
 const appendToGrid = (articles) => {
-  const html = articles.map((article) => createCard(article)).join('');
-  newsGrid.insertAdjacentHTML('beforeend', html);
+  const html = articles.map((article) => createCard(article)).join("");
+  newsGrid.insertAdjacentHTML("beforeend", html);
 };
 
 // =====================================================
@@ -220,14 +220,14 @@ const createCard = (article) => {
         ${image}
       </div>
       <div class="news-card-body">
-        <span class="news-card-category">${currentQuery ? 'Search Result' : currentCategory}</span>
+        <span class="news-card-category">${currentQuery ? "Search Result" : currentCategory}</span>
         <h3 class="news-card-title">${article.title}</h3>
-        <p class="news-card-desc">${article.description || ''}</p>
+        <p class="news-card-desc">${article.description || ""}</p>
         <a href="${article.url}" target="_blank" class="read-more">
           Read More <i class="fas fa-arrow-right"></i>
         </a>
         <div class="news-card-footer">
-          <span class="news-card-source">${article.source?.name || 'Unknown'}</span>
+          <span class="news-card-source">${article.source?.name || "Unknown"}</span>
           <span class="news-card-date">${formatDate(article.publishedAt)}</span>
         </div>
       </div>
@@ -246,7 +246,7 @@ const updateTicker = (articles) => {
   const headlines = articles
     .slice(0, 8)
     .map((a) => `<span class="ticker-item">⚡ ${a.title}</span>`)
-    .join('&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;');
+    .join("&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;");
 
   tickerContent.innerHTML = headlines;
 };
@@ -258,9 +258,9 @@ const updateTicker = (articles) => {
 
 const updateTimestamp = () => {
   const now = new Date();
-  const time = now.toLocaleTimeString('en-NG', {
-    hour: '2-digit',
-    minute: '2-digit',
+  const time = now.toLocaleTimeString("en-NG", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
   if (newsTimestamp) {
     newsTimestamp.textContent = `Updated at ${time}`;
@@ -275,26 +275,26 @@ const updateTimestamp = () => {
 // =====================================================
 
 const initCategoryTabs = () => {
-  const tabs = document.querySelectorAll('.cat-tab');
+  const tabs = document.querySelectorAll(".cat-tab");
 
   tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener("click", () => {
       // Remove active from all tabs
-      tabs.forEach((t) => t.classList.remove('active'));
+      tabs.forEach((t) => t.classList.remove("active"));
 
       // Add active to clicked tab
-      tab.classList.add('active');
+      tab.classList.add("active");
 
       // Update state and fetch
-      currentCategory = tab.getAttribute('data-category');
+      currentCategory = tab.getAttribute("data-category");
       currentPage = 1;
-      currentQuery = '';
+      currentQuery = "";
 
       // Clear search input
-      if (searchInput) searchInput.value = '';
+      if (searchInput) searchInput.value = "";
 
       // Save last category to localStorage
-      localStorage.setItem('nf_category', currentCategory);
+      localStorage.setItem("nf_category", currentCategory);
 
       fetchNews(currentCategory, 1);
     });
@@ -317,20 +317,20 @@ const initSearch = () => {
 
     // Reset category tabs active state
     document
-      .querySelectorAll('.cat-tab')
-      .forEach((t) => t.classList.remove('active'));
+      .querySelectorAll(".cat-tab")
+      .forEach((t) => t.classList.remove("active"));
 
     currentQuery = query;
-    currentCategory = '';
+    currentCategory = "";
     currentPage = 1;
 
-    fetchNews('', 1, query);
+    fetchNews("", 1, query);
   };
 
-  searchBtn.addEventListener('click', doSearch);
+  searchBtn.addEventListener("click", doSearch);
 
-  searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') doSearch();
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") doSearch();
   });
 };
 
@@ -344,7 +344,7 @@ const initSearch = () => {
 const initLoadMore = () => {
   if (!loadMoreBtn) return;
 
-  loadMoreBtn.addEventListener('click', () => {
+  loadMoreBtn.addEventListener("click", () => {
     currentPage++;
     fetchNews(currentCategory, currentPage, currentQuery);
   });
@@ -360,7 +360,7 @@ const initLoadMore = () => {
 const initRetry = () => {
   if (!retryBtn) return;
 
-  retryBtn.addEventListener('click', () => {
+  retryBtn.addEventListener("click", () => {
     fetchNews(currentCategory, currentPage, currentQuery);
   });
 };
@@ -374,25 +374,25 @@ const initRetry = () => {
 const initHomeBtn = () => {
   if (!homeBtn) return;
 
-  homeBtn.addEventListener('click', (e) => {
+  homeBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
-    currentCategory = 'general';
+    currentCategory = "general";
     currentPage = 1;
-    currentQuery = '';
+    currentQuery = "";
 
-    if (searchInput) searchInput.value = '';
+    if (searchInput) searchInput.value = "";
 
     // Reset tabs
     document
-      .querySelectorAll('.cat-tab')
-      .forEach((t) => t.classList.remove('active'));
+      .querySelectorAll(".cat-tab")
+      .forEach((t) => t.classList.remove("active"));
     const generalTab = document.querySelector(
       '.cat-tab[data-category="general"]',
     );
-    if (generalTab) generalTab.classList.add('active');
+    if (generalTab) generalTab.classList.add("active");
 
-    fetchNews('general', 1);
+    fetchNews("general", 1);
   });
 };
 
@@ -407,25 +407,25 @@ const initDarkMode = () => {
   if (!darkToggle) return;
 
   // Check saved preference
-  const saved = localStorage.getItem('nf_darkmode');
-  if (saved === 'true') {
-    document.body.classList.add('dark-mode');
-    const icon = darkToggle.querySelector('i');
+  const saved = localStorage.getItem("nf_darkmode");
+  if (saved === "true") {
+    document.body.classList.add("dark-mode");
+    const icon = darkToggle.querySelector("i");
     if (icon) {
-      icon.classList.replace('fa-moon', 'fa-sun');
+      icon.classList.replace("fa-moon", "fa-sun");
     }
   }
 
-  darkToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
 
-    localStorage.setItem('nf_darkmode', isDark);
+    localStorage.setItem("nf_darkmode", isDark);
 
-    const icon = darkToggle.querySelector('i');
+    const icon = darkToggle.querySelector("i");
     if (icon) {
-      icon.classList.toggle('fa-moon', !isDark);
-      icon.classList.toggle('fa-sun', isDark);
+      icon.classList.toggle("fa-moon", !isDark);
+      icon.classList.toggle("fa-sun", isDark);
     }
   });
 };
@@ -440,39 +440,39 @@ const initDarkMode = () => {
 const initHamburger = () => {
   if (!hamburger || !navLinks) return;
 
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    const icon = hamburger.querySelector('i');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+    const icon = hamburger.querySelector("i");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-times");
   });
 
   // Close when nav link is clicked
-  document.querySelectorAll('.nav-link').forEach((link) => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('active');
-      const icon = hamburger.querySelector('i');
-      icon.classList.add('fa-bars');
-      icon.classList.remove('fa-times');
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
+      const icon = hamburger.querySelector("i");
+      icon.classList.add("fa-bars");
+      icon.classList.remove("fa-times");
 
       // Fetch the clicked category
-      const category = link.getAttribute('data-category');
+      const category = link.getAttribute("data-category");
       if (category) {
         currentCategory = category;
         currentPage = 1;
-        currentQuery = '';
+        currentQuery = "";
         fetchNews(category, 1);
       }
     });
   });
 
   // Close when clicking outside navbar
-  document.addEventListener('click', (e) => {
+  document.addEventListener("click", (e) => {
     if (!navbar.contains(e.target)) {
-      navLinks.classList.remove('active');
-      const icon = hamburger.querySelector('i');
-      icon.classList.add('fa-bars');
-      icon.classList.remove('fa-times');
+      navLinks.classList.remove("active");
+      const icon = hamburger.querySelector("i");
+      icon.classList.add("fa-bars");
+      icon.classList.remove("fa-times");
     }
   });
 };
@@ -482,7 +482,7 @@ const initHamburger = () => {
 // =====================================================
 
 const setCurrentYear = () => {
-  document.querySelectorAll('.current-year').forEach((span) => {
+  document.querySelectorAll(".current-year").forEach((span) => {
     span.textContent = new Date().getFullYear();
   });
 };
@@ -506,7 +506,7 @@ const startAutoRefresh = () => {
 // =====================================================
 
 // Restore last category from localStorage
-const savedCategory = localStorage.getItem('nf_category');
+const savedCategory = localStorage.getItem("nf_category");
 if (savedCategory) {
   currentCategory = savedCategory;
   const savedTab = document.querySelector(
@@ -514,9 +514,9 @@ if (savedCategory) {
   );
   if (savedTab) {
     document
-      .querySelectorAll('.cat-tab')
-      .forEach((t) => t.classList.remove('active'));
-    savedTab.classList.add('active');
+      .querySelectorAll(".cat-tab")
+      .forEach((t) => t.classList.remove("active"));
+    savedTab.classList.add("active");
   }
 }
 
